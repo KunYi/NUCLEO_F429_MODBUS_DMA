@@ -23,6 +23,7 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
+#include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -213,9 +214,10 @@ void StartTaskSlave(void *argument)
   /* Infinite loop */
   for(;;)
   {
-
 		xSemaphoreTake(ModbusH.ModBusSphrHandle , portMAX_DELAY);
 		HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, ModbusH.u16regs[0] & 0x1);
+		printf("reg 0:%d, reg 1: %d\r\n", ModbusH.u16regs[0], ModbusH.u16regs[1]);
+		printf("reg 2:%d, reg 3: %d\r\n", ModbusH.u16regs[2], ModbusH.u16regs[3]);
 		xSemaphoreGive(ModbusH.ModBusSphrHandle);
 
 		osDelay(200);
